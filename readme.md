@@ -20,6 +20,6 @@
     - user how post a product can only modify and delete 
     - can't register with the same email address
     - user can reset password in 10 minutes from link sent to his mail (token)
-    **Register validation**
+**Register validation**
     - Mail must be a real mail
     - password at least 6 char and consist of numbers and letters
