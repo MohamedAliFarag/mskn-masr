@@ -10,12 +10,14 @@ const methodOverride = require('method-override')
 const session        = require('express-session')
 const passport       = require('passport')
 const LocalStrategy  = require('passport-local')
+//env proccess
+require('dotenv').config()
 
 //define Packages
 const app = express()
 
 //connect to DB
-mongoose.connect('mongodb+srv://MohamedAli:maskndb92@cluster0-uqgqf.gcp.mongodb.net/mskn?retryWrites=true&w=majority',{ useNewUrlParser: true , useUnifiedTopology: true})
+mongoose.connect(process.env.DATABASEURL,{useNewUrlParser: true , useUnifiedTopology: true})
 
 //express session
 app.use(session({
