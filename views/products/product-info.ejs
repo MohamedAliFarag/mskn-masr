@@ -1,0 +1,59 @@
+<%- include('../includes/header.ejs')%>
+<%- include('../includes/navbar.ejs')%>
+<div class="container pt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h1 class='text-right pb-3'><%=product.name%></h1>
+            <div class="card shadow mb-5 bg-white rounded">
+                <img src="<%=product.image%>" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title"><%=product.name%></h5>
+                </div>
+                  <ul class="list-group list-group-flush p-0">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-4">المساحه (<%=product.size%>)</div>
+                                <div class="col-md-4">
+                                        <i class="fas fa-bed fa-2x"></i>
+                                    الغرف (<%=product.rooms%>)</div>
+                                <div class="col-md-4">
+                                        <i class="fas fa-bath fa-2x"></i>
+                                    الحمامات (<%=product.bathroom%>)</div>
+                            </div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-md-6  d-flex align-self-center">
+                                        <a href="/product/<%=product._id%>/edit" class="btn btn-outline-warning btn-md ml-2">تعديل الاعلان</a>
+                                        <form action="/product/<%=product._id%>?_method=DELETE" method="POST">
+                                            <button class="btn btn-outline-danger btn-md ">ازاله الاعلان</button>
+                                        </form>
+                                        
+                                </div>
+                                <div class="col-md-6 text-center">
+                                        <h4>للبيع</h4>
+                                        <h4 class="d-inline"><%=product.price%></h4>
+                                        <h4 class="d-inline">جنيه</h4>
+                                </div>
+                            </div>
+                        </li>
+                  </ul>
+                
+              </div>
+            </div>
+        
+        <div class="col-md-3">
+            <div class="card shadow mb-5 rounded bg-white">
+                <div class="card-body text-center">
+                    <h4>بيانات المالك</h4>
+                    <h4>محمد على</h4>
+                    <input type="checkbox" checked data-toggle="toggle" data-on="<i class='fas fa-mobile-alt fa-x'></i> رقم التليفون" data-off="01111843250" data-onstyle="danger" data-offstyle="success" data-size="large">
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+<%- include('../includes/footer.ejs')%>

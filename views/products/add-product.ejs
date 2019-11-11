@@ -1,0 +1,57 @@
+<%- include('../includes/header.ejs')%>
+<%- include('../includes/navbar.ejs')%>
+
+<div class="container mt-5">
+    <h1 class="text-center display-4 pb-3">أضف عقارك</h1>
+    <div class="row">
+        <div class="col-md-6 m-auto">
+                <form action="/add-product" method="POST">
+                    <div class="form-group text-right">
+                            <label for="name">عنوان الاعلان</label>
+                        <input type="text" class="form-control" name="name" placeholder="شقة 200 متر بالسابعه عمارات">
+                    </div>
+                    <div class="form-group text-right">
+                            <label for="image">اضف صور العقار</label>
+                        <input type="text" class="form-control" name="image" placeholder="لينك الصور">
+                    </div>
+                    <div class="form-group text-right">
+                            <label for="size">مساحه العقار</label>
+                        <input type="number" class="form-control" name="size" placeholder="مثال : 150 متر">
+                    </div>
+                    <div class="form-group text-right">
+                        <label for="name">عددالغرف</label>
+                        <select class="form-control" name="rooms">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                          </select>
+                        </div>
+
+                        <div class="form-group text-right">
+                                <label for="name">عدد الحمامات</label>
+                                <select class="form-control" name="bathroom">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                  </select>
+                                </div>
+                                <div class="form-group text-right">
+                                        <label for="price">السعر</label>
+                                    <input type="number" class="form-control" name="price" placeholder="مثال : 200000 جنيه">
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-success btn-block">اضف عقارك</button>
+                                </div>
+                </form>
+        </div>
+            
+    </div>
+</div>
+
+
+
+<%- include('../includes/footer.ejs')%>

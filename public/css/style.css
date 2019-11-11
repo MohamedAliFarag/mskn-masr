@@ -1,0 +1,29 @@
+body{
+    font-family: 'Cairo',sans-serif;
+}
+
+/* index page search area */
+#searchArea{
+    position: relative;
+    width: 100%;
+    min-height:400px;
+    background: url(../img/main-img.jpg);
+    background-size:cover ;
+    background-repeat: no-repeat ;
+    color:#fff;
+}
+
+.green-overlay{
+    position:absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(105,105,105,0.8); 
+}
+
+/* Index page productCards section */
+
+#productCards{
+    min-height: 600px;
+}
