@@ -15,7 +15,7 @@ require('dotenv').config()
 
 //define Packages
 const app = express()
-
+console.log(process.env.DATABASEURL)
 //connect to DB
 mongoose.connect(process.env.DATABASEURL,{useNewUrlParser: true , useUnifiedTopology: true})
 
