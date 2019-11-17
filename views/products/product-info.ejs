@@ -7,7 +7,7 @@
             <div class="card shadow mb-5 bg-white rounded">
                 <img src="<%=product.image%>" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title"><%=product.name%></h5>
+                  <h5 class="card-title text-right"><%=product.name%></h5>
                 </div>
                   <ul class="list-group list-group-flush p-0">
                         <li class="list-group-item">
@@ -23,7 +23,7 @@
                         </li>
                         <li class="list-group-item">
                             <div class="row">
-                                <%if(currentUser._id.equals(product.author.id)){%>
+                                <%if(currentUser && currentUser._id.equals(product.author.id)){%>
                                 <div class="col-md-6  d-flex align-self-center">
                                         <a href="/product/<%=product._id%>/edit" class="btn btn-outline-warning btn-md ml-2">تعديل الاعلان</a>
                                         <form action="/product/<%=product._id%>?_method=DELETE" method="POST">
