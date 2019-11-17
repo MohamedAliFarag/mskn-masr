@@ -18,4 +18,6 @@ router.post('/login',
 
 //logout ::GET
 router.get('/logout',authRoutes.getLogout)
+
+
 module.exports = router

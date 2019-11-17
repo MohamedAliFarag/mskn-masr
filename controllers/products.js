@@ -16,13 +16,18 @@ exports.postAddProduct = (req,res,next)=>{
     const rooms = req.body.rooms
     const bathroom = req.body.bathroom
     const price = req.body.price
+    const author = {
+        id : req.user._id,
+        username : req.user.email
+    }
     const newproduct = new Product( {
         name:name,
         image:image,
         size:size,
         rooms:rooms,
         bathroom:bathroom,
-        price:price
+        price:price,
+        author:author
     })
     newproduct.save()
     .then(product =>{
@@ -79,7 +84,7 @@ exports.postEditProduct = (req,res,next)=>{
 //Product Delete
 exports.deleteProduct = (req,res,next)=>{
     const prodId = req.params.productId
-    Product.findOneAndDelete(prodId)
+    Product.findByIdAndRemove(prodId)
     .then(product=>{
         console.log(product.name+'Deleted')
         res.redirect('/')

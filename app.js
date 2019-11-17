@@ -15,10 +15,10 @@ require('dotenv').config()
 
 //define Packages
 const app = express()
-console.log(process.env.DATABASEURL)
 //connect to DB
 mongoose.connect(process.env.DATABASEURL,{useNewUrlParser: true , useUnifiedTopology: true})
 
+//mongoose.connect('mongodb://localhost/mskn', {useNewUrlParser: true, useUnifiedTopology: true});
 //express session
 app.use(session({
   secret: 'keyboard cat',

@@ -23,6 +23,7 @@
                         </li>
                         <li class="list-group-item">
                             <div class="row">
+                                <%if(currentUser._id.equals(product.author.id)){%>
                                 <div class="col-md-6  d-flex align-self-center">
                                         <a href="/product/<%=product._id%>/edit" class="btn btn-outline-warning btn-md ml-2">تعديل الاعلان</a>
                                         <form action="/product/<%=product._id%>?_method=DELETE" method="POST">
@@ -30,7 +31,8 @@
                                         </form>
                                         
                                 </div>
-                                <div class="col-md-6 text-center">
+                                <%}%>
+                                <div class="col-md-6 text-center m-auto">
                                         <h4>للبيع</h4>
                                         <h4 class="d-inline"><%=product.price%></h4>
                                         <h4 class="d-inline">جنيه</h4>
@@ -46,7 +48,7 @@
             <div class="card shadow mb-5 rounded bg-white">
                 <div class="card-body text-center">
                     <h4>بيانات المالك</h4>
-                    <h4>محمد على</h4>
+                    <h4><%=product.author.username%></h4>
                     <input type="checkbox" checked data-toggle="toggle" data-on="<i class='fas fa-mobile-alt fa-x'></i> رقم التليفون" data-off="01111843250" data-onstyle="danger" data-offstyle="success" data-size="large">
                 </div>
             </div>

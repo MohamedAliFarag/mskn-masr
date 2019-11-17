@@ -28,6 +28,12 @@ const productSchema = mongoose.Schema({
     price : {
         type:Number,
         required:true
+    },author:{
+        id:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'User'
+        },
+        username: String
     }
 })
 
