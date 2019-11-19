@@ -27,3 +27,19 @@ body{
 #productCards{
     min-height: 600px;
 }
+
+.message{
+    z-index: 1;
+    margin:10px;
+}
+
+/* 404 */
+
+#page404{
+    position: absolute;
+    width: 100vw;
+    height:100vh;
+    background: url(../img/404.png);
+    background-size:cover ;
+    background-repeat: no-repeat ;
+}

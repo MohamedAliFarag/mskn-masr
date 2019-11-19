@@ -25,10 +25,36 @@
             <li class="nav-item">
                 <a class="nav-link btn btn-danger text-white" href="/add-product"> اضف عقارك +</a>
               </li>
-
-              
           </ul>
         </div>
       </nav>
 
+<!-- toast (Messages) -->
+    <%if(success && success.length>0){%>
+    <div class="toast message position-absolute" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+        <div class="toast-header">
+          <strong class="ml-2 ">مسكن مصر</strong>
+          <button type="button" class="mr-auto mb-1 close" data-dismiss="toast" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="toast-body text-center text-success h3">
+            <%=success%>
+        </div>
+      </div>
+      <%}%>
+
+      <%if(error && error.length>0){%>
+        <div class="toast message position-absolute" role="alert" aria-live="assertive" aria-atomic="true" data-delay="10000">
+            <div class="toast-header">
+              <strong class="ml-2 ">مسكن مصر</strong>
+              <button type="button" class="mr-auto mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="toast-body text-center text-danger h3">
+                <%=error%>
+            </div>
+          </div>
+          <%}%>
     

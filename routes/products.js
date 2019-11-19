@@ -32,6 +32,7 @@ function isLoggedin(req,res,next){
     if(req.isAuthenticated()){
         return next()
     }
+    req.flash('error','يجب ان تسجل الدخول اولا')
     res.redirect('/login')
 }
 
@@ -40,11 +41,13 @@ function checkOwnerShip(req,res,next){
     if(req.isAuthenticated()){
         Product.findById(req.params.productId,(err,product)=>{
             if(err || !product){
+                req.flash('error','هذا العقار لم يعد متاح او انك تحاول فعل شئ لا تمتلك الاذن له')
                 res.redirect('back')
             }else{
                 if(product.author.id.equals(req.user._id)){
                     next()
                 }else{
+                    req.flash('error','هذا العقار لم يعد متاح او انك تحاول فعل شئ لا تمتلك الاذن له')
                     res.redirect('back')
                 }
             }

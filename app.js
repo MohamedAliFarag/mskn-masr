@@ -10,6 +10,7 @@ const methodOverride = require('method-override')
 const session        = require('express-session')
 const passport       = require('passport')
 const LocalStrategy  = require('passport-local')
+const flash          = require('connect-flash')
 //env proccess
 require('dotenv').config()
 
@@ -38,7 +39,8 @@ passport.use(new LocalStrategy({
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-
+//connect-flash
+app.use(flash())
 
 //ejs
 app.set('view engine','ejs')
@@ -51,7 +53,9 @@ app.use(methodOverride('_method'))
 
 //middlewars
 app.use((req,res,next)=>{
-  res.locals.currentUser = req.user
+  res.locals.currentUser = req.user,
+  res.locals.error = req.flash('error'),
+  res.locals.success = req.flash('success')
   next()
 })
 
@@ -67,7 +71,7 @@ app.use(authRoutes)
 
 //404 page
 app.use((req,res,next)=>{
-    return res.status(404).render('notfound/404',{pageTitle:'Not Found'})
+    return res.status(404).render('notfound/404',{pageTitle:'لا يوجد شئ هنا'})
 })
 
 //mongoose deprecation fix

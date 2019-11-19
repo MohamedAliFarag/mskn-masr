@@ -12,9 +12,19 @@ router.post('/register',authRoutes.postRegister)
 //login ::GET
 router.get('/login',authRoutes.getLogin)
 
-//login ::POST
-router.post('/login',
-    passport.authenticate('local',{failureRedirect:'/login'}),authRoutes.postLogin)
+router.post('/login',passport.authenticate('local',{
+     successRedirect:'/',
+     failureRedirect:'/login',
+     failureFlash:'اسم المستخدم او الباسورد خطأ',
+     successFlash:"اهلا بك مره اخرى"
+}),(req,res)=>{
+    res.redirect('/')
+}
+)
+
+router.post('/login',(req,res,next)=>{
+
+})
 
 //logout ::GET
 router.get('/logout',authRoutes.getLogout)

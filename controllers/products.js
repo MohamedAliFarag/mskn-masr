@@ -32,9 +32,14 @@ exports.postAddProduct = (req,res,next)=>{
     newproduct.save()
     .then(product =>{
         console.log(product)
+        req.flash('success','تم اضافه عقارك بنجاح')
         res.redirect('/')
     })
-    .catch(err => {console.log(err)})
+    .catch(err => {
+        console.log(err)
+        req.flash('error','لم يتم تسجيل عقارك , برجاء المحاوله مره اخرى')
+        res.redirect('/add-product')
+    })
 }
 
 //Product info ::GET
@@ -47,7 +52,10 @@ exports.getProductInfo = (req,res,next)=>{
             pageTitle: product.name
         })
     })
-    .catch(err=>{console.log(err)})
+    .catch(err=>{
+        req.flash('error','يبدو ان هذاالعقار لم يعد موجود')
+        res.redirect('/')
+        console.log(err)})
 }
 
 //Product Edit ::GET
@@ -60,7 +68,9 @@ exports.getProductEdit = (req,res,next)=>{
             pageTitle: product.name + 'Edit'
         })
     })
-    .catch()
+    .catch(err=>{
+        console.log(err)
+    })
 }
 
 //Product Edit ::PUT
@@ -76,9 +86,14 @@ exports.postEditProduct = (req,res,next)=>{
     }
     Product.findByIdAndUpdate(prodId,newData)
     .then(product=>{
+        req.flash('success','تم تسجيل التعديل بنجاح')
         res.redirect('/product/'+product._id)
     })
-    .catch(err=>console.log(err))
+    .catch(err=>{
+        console.log(err)
+        req.flash('error','لم يتم تسجيل التعديل')
+        res.redirect('/')
+    })
 }
 
 //Product Delete
@@ -87,7 +102,11 @@ exports.deleteProduct = (req,res,next)=>{
     Product.findByIdAndRemove(prodId)
     .then(product=>{
         console.log(product.name+'Deleted')
+        req.flash('success','تم مسح العقار بنجاح')
         res.redirect('/')
     })
-    .catch(err=>{console.log(err)})
+    .catch(err=>{
+        req.flash('error','لم يتم الامر بنجاح')
+        res.redirect('back')
+        console.log(err)})
 }
