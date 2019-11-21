@@ -11,6 +11,7 @@ const session        = require('express-session')
 const passport       = require('passport')
 const LocalStrategy  = require('passport-local')
 const flash          = require('connect-flash')
+const multer         = require('multer')
 //env proccess
 require('dotenv').config()
 
@@ -42,15 +43,36 @@ passport.deserializeUser(User.deserializeUser());
 //connect-flash
 app.use(flash())
 
+//file storage system
+  //destination && filename
+const fileStorage = multer.diskStorage({
+  destination: (req,file,cb)=>{
+    cb(null,'images')
+  },
+  filename : (req,file,cb)=>{
+    cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname)
+  }
+})
+  //accepted file extensions
+const fileFilter = (req,file,cb)=>{
+  if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
+    cb(null, true)
+  }else{
+    cb(null, false)
+  }
+}
+
 //ejs
 app.set('view engine','ejs')
 //static file app
 app.use(express.static(path.join(__dirname,'public')))
+app.use('/images',express.static(path.join(__dirname,'images')))
 //body parser
 app.use(bodyParser.urlencoded({extended:false}))
 //method-override
 app.use(methodOverride('_method'))
-
+//multer
+app.use(multer({storage:fileStorage , fileFilter:fileFilter}).single('image'))
 //middlewars
 app.use((req,res,next)=>{
   res.locals.currentUser = req.user,
