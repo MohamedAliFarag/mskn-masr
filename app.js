@@ -12,7 +12,6 @@ const passport       = require('passport')
 const LocalStrategy  = require('passport-local')
 const flash          = require('connect-flash')
 const multer         = require('multer')
-var cloudinary       = require('cloudinary')
 //env proccess
 require('dotenv').config()
 
@@ -47,6 +46,9 @@ app.use(flash())
 //file storage system
   //destination && filename
 const fileStorage = multer.diskStorage({
+  destination: (req,file,cb)=>{
+    cb(null,'images')
+  },
   filename : (req,file,cb)=>{
     cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname)
   }
@@ -54,28 +56,23 @@ const fileStorage = multer.diskStorage({
   //accepted file extensions
 const fileFilter = (req,file,cb)=>{
   if(file.mimetype === 'image/png' || file.mimetype === 'image/jpg' || file.mimetype === 'image/jpeg'){
-   cb(null, true)
+    cb(null, true)
   }else{
-    req.errorImage = 'Error Extension'
-    cb(null, false , req.errorImage)
+    cb(null, false)
   }
 }
-//multer
-app.use(multer({ storage: fileStorage, fileFilter: fileFilter}).single('image'))
-
-
-
-
 
 //ejs
 app.set('view engine','ejs')
 //static file app
 app.use(express.static(path.join(__dirname,'public')))
+app.use('/images',express.static(path.join(__dirname,'images')))
 //body parser
 app.use(bodyParser.urlencoded({extended:false}))
 //method-override
 app.use(methodOverride('_method'))
-
+//multer
+app.use(multer({storage:fileStorage , fileFilter:fileFilter}).single('image'))
 //middlewars
 app.use((req,res,next)=>{
   res.locals.currentUser = req.user,

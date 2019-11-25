@@ -5,8 +5,6 @@ const productsController = require('../controllers/products')
 //Models
 const Product = require('../models/product')
 
-
-
 //add-product ::Get
 router.get('/add-product',isLoggedin,productsController.getAddProduct)
 
