@@ -1,5 +1,17 @@
 //models
 const Product = require('../models/product')
+//cloudinary
+const cloudinary = require('cloudinary')
+//cloudinary
+cloudinary.config({ 
+    cloud_name: 'masknmasr', 
+    api_key: process.env.CLOUDINARY_API_KEY, 
+    api_secret: process.env.CLOUDINARY_API_SECRET
+  });
+
+  
+//*** Controllers ***
+
 
 //Add product ::GET
 exports.getAddProduct = (req,res,next)=>{
@@ -10,9 +22,21 @@ exports.getAddProduct = (req,res,next)=>{
 
 //Add Product ::POST
 exports.postAddProduct = (req,res,next)=>{
-    const name = req.body.name
-    const image = req.file
-    const size = req.body.size
+    if(req.errorImage){
+        console.log(req.errorImage)
+        req.flash('error','صيغه الصوره غير مناسبه يجب ان تكون jpg,jpeg,png')
+        return res.redirect('back')
+    }
+    cloudinary.v2.uploader.upload(req.file.path, 
+    (err,result)=> {
+        if(err){
+            req.flash('error','شئ خطا قد حدث')
+            res.redirect('back')
+        }
+    const name  = req.body.name
+    const image = result.secure_url
+    const imageId = result.public_id
+    const size  = req.body.size
     const rooms = req.body.rooms
     const bathroom = req.body.bathroom
     const price = req.body.price
@@ -20,16 +44,10 @@ exports.postAddProduct = (req,res,next)=>{
         id : req.user._id,
         username : req.user.email
     }
-    //check if there is no image
-    if(!image){
-        req.flash('error','صيغه الصوره غير مناسبه')
-        return res.redirect('back')
-    }
-    //save path of images to database
-    const imageUrl = image.path
     const newproduct = new Product( {
         name:name,
-        imageUrl:imageUrl,
+        image:image,
+        imageId:imageId,
         size:size,
         rooms:rooms,
         bathroom:bathroom,
@@ -47,6 +65,7 @@ exports.postAddProduct = (req,res,next)=>{
         req.flash('error','لم يتم تسجيل عقارك , برجاء المحاوله مره اخرى')
         res.redirect('/add-product')
     })
+})
 }
 
 //Product info ::GET
@@ -80,78 +99,53 @@ exports.getProductEdit = (req,res,next)=>{
     })
 }
 
-// Product Edit ::PUT
-// exports.postEditProduct = (req,res,next)=>{
-//     const prodId = req.params.productId
-//     const newData = {
-//         name:req.body.name,
-//         image : req.file,
-//         size : req.body.size,
-//         rooms : req.body.rooms,
-//         bathroom : req.body.bathroom,
-//         price : req.body.price
-//     }
-    
-//     Product.findByIdAndUpdate(prodId,newData)
-//     .then(product=>{
-//         req.flash('success','تم تسجيل التعديل بنجاح')
-//         res.redirect('/product/'+product._id)
-//     })
-//     .catch(err=>{
-//         console.log(err)
-//         req.flash('error','لم يتم تسجيل التعديل')
-//         res.redirect('/')
-//     })
-// }
-
-
-
-
 //Product Edit ::PUT
 exports.postEditProduct = (req,res,next)=>{
-    const prodId = req.params.productId
-    
-        const updatedName     = req.body.name
-        const image    = req.file
-        const updatedSize     = req.body.size
-        const updatedRooms    = req.body.rooms
-        const updatedBathroom = req.body.bathroom
-        const updatedPrice    = req.body.price
-    
-    
-    Product.findById(prodId)
-    .then(product=>{
-        product.name     = updatedName
-        //check if image exist
-        if(image){
-            product.imageUrl = image.path
+    //find product by id
+    Product.findById(req.params.productId)
+    .then(async product=>{
+        // if there is an image
+        if(req.file){
+        try{
+            //delete the image on the cloudinary by its imageId
+            //upload the new image by get it from the form using multer req.file.path
+            await cloudinary.v2.uploader.destroy(product.imageId)
+            let result = await cloudinary.v2.uploader.upload(req.file.path)
+            console.log(result)
+            // After that save the new image URL and ID in the DB
+            product.image   = result.secure_url
+            product.imageId = result.public_id
+        }catch(err){
+            console.log(err)
+            req.flash('error','لم يتم تغير الصوره')
+            return res.redirect('back')
         }
-        product.size     = updatedSize
-        product.rooms    = updatedRooms
-        product.bathroom = updatedBathroom
-        product.price    = updatedPrice
+    }
+        product.name     = req.body.name
+        product.size     = req.body.size
+        product.rooms    = req.body.rooms
+        product.bathroom = req.body.bathroom
+        product.price    = req.body.price
         product.save()
         req.flash('success','تم تسجيل التعديل بنجاح')
         res.redirect('/product/'+product._id)
+    
     })
-    .catch(err=>{
+    .catch(err =>{
+        req.flash('error','حدث خطا لم تتم العمليه بتجاح')
+        res.redirect('back')
         console.log(err)
-        req.flash('error','لم يتم تسجيل التعديل')
-        res.redirect('/')
     })
 }
-
-
-
-
-
 
 //Product Delete
 exports.deleteProduct = (req,res,next)=>{
     const prodId = req.params.productId
-    Product.findByIdAndRemove(prodId)
-    .then(product=>{
+    Product.findById(prodId)
+    .then(async product=>{
         console.log(product.name+'Deleted')
+        await cloudinary.v2.uploader.destroy(product.imageId)
+        await product.remove()
         req.flash('success','تم مسح العقار بنجاح')
         res.redirect('/')
     })
