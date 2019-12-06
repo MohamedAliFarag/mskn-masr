@@ -9,17 +9,28 @@
           <ul class="navbar-nav mr-auto">
             <%if(!currentUser){%>
             <li class="nav-item <%=pageTitle == 'اشتراك'?'active':''%>">
-              <a class="nav-link" href="/register">اشترك</a>
+                <form action="/register" method="GET">
+                  <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                  <a class="nav-link" href="/register">اشترك</a>
+                </form>
+              
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/login">تسجيل دخول</a>
+                <form action="/login" method="GET">
+                  <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                  <a class="nav-link" href="/login">تسجيل دخول</a>
+                </form>
+              
             </li>
             <% }else{%>
               <li class="nav-item">
                 <a class="nav-link" href="/"><%=currentUser.email%></a>
               </li>
               <li class="nav-item">
-                <a href="/logout" class="nav-link">تسجيل جروج</a>
+                <form action="/logout" method="GET">
+                  <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                  <a href="/logout" class="nav-link">تسجيل جروج</a>
+                </form>
               </li>
               <%}%>
             <li class="nav-item">

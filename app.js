@@ -12,7 +12,8 @@ const passport       = require('passport')
 const LocalStrategy  = require('passport-local')
 const flash          = require('connect-flash')
 const multer         = require('multer')
-var cloudinary       = require('cloudinary')
+const csrf           = require('csurf')
+
 //env proccess
 require('dotenv').config()
 
@@ -22,12 +23,18 @@ const app = express()
 mongoose.connect(process.env.DATABASEURL,{useNewUrlParser: true , useUnifiedTopology: true})
 
 //mongoose.connect('mongodb://localhost/mskn', {useNewUrlParser: true, useUnifiedTopology: true});
+
+
+
+
 //express session
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true
 }))
+
+
 
 //passport init
 app.use(passport.initialize())
@@ -63,9 +70,8 @@ const fileFilter = (req,file,cb)=>{
 //multer
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter}).single('image'))
 
-
-
-
+//csruf Token
+const csrfProtection = csrf()
 
 //ejs
 app.set('view engine','ejs')
@@ -75,12 +81,15 @@ app.use(express.static(path.join(__dirname,'public')))
 app.use(bodyParser.urlencoded({extended:false}))
 //method-override
 app.use(methodOverride('_method'))
+//use csrfProtection Token
+app.use(csrfProtection)
 
 //middlewars
 app.use((req,res,next)=>{
   res.locals.currentUser = req.user,
   res.locals.error = req.flash('error'),
-  res.locals.success = req.flash('success')
+  res.locals.success = req.flash('success'),
+  res.locals.csrfToken = req.csrfToken()
   next()
 })
 

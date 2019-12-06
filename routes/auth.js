@@ -12,6 +12,7 @@ router.post('/register',authRoutes.postRegister)
 //login ::GET
 router.get('/login',authRoutes.getLogin)
 
+//login ::POST
 router.post('/login',passport.authenticate('local',{
      successRedirect:'/',
      failureRedirect:'/login',
@@ -28,6 +29,20 @@ router.post('/login',(req,res,next)=>{
 
 //logout ::GET
 router.get('/logout',authRoutes.getLogout)
+
+//reset password ::GET
+router.get('/reset-password',authRoutes.resetPassword)
+
+//reset password ::POST
+router.post('/reset',authRoutes.postResetPassword)
+
+//new password ::GET
+router.get('/reset/:token',authRoutes.getNewPassword)
+
+//new password ::POST
+router.post('/new-password',authRoutes.postNewPassword)
+
+
 
 
 module.exports = router
