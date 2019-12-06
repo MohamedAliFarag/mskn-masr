@@ -98,7 +98,7 @@ exports.postResetPassword = (req,res,next)=>{
                 from : 'Mohamedali.itc@gmail.com',
                 subject: 'تغير كلمه المرور - مسكن مصر',
                 html:`<h3>لقد طلبت تغير كلمه المرور</h3>
-                <p><a href='http://localhost:3000/reset/${token}'>يمكنك تغيرها من خلال هذا <a>اللينك</p>
+                <p><a href='https://masknmasr.herokuapp.com/reset/${token}'>يمكنك تغيرها من خلال هذا <a>اللينك</p>
                 `
             })
         })
