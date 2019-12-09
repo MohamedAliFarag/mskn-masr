@@ -1,5 +1,6 @@
 //models
 const Product = require('../models/product')
+
 //cloudinary
 const cloudinary = require('cloudinary')
 //cloudinary
@@ -40,9 +41,11 @@ exports.postAddProduct = (req,res,next)=>{
     const rooms = req.body.rooms
     const bathroom = req.body.bathroom
     const price = req.body.price
+    const phoneNum = req.body.phoneNum
     const author = {
         id : req.user._id,
-        username : req.user.email
+        firstName : req.user.firstName,
+        lastName : req.user.lastName
     }
     const newproduct = new Product( {
         name:name,
@@ -52,7 +55,8 @@ exports.postAddProduct = (req,res,next)=>{
         rooms:rooms,
         bathroom:bathroom,
         price:price,
-        author:author
+        author:author,
+        phoneNum : phoneNum
     })
     newproduct.save()
     .then(product =>{
@@ -126,6 +130,7 @@ exports.postEditProduct = (req,res,next)=>{
         product.rooms    = req.body.rooms
         product.bathroom = req.body.bathroom
         product.price    = req.body.price
+        product.phoneNum = req.body.phoneNum
         product.save()
         req.flash('success','تم تسجيل التعديل بنجاح')
         res.redirect('/product/'+product._id)

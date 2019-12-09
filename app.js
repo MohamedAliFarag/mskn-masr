@@ -89,7 +89,8 @@ app.use((req,res,next)=>{
   res.locals.currentUser = req.user,
   res.locals.error = req.flash('error'),
   res.locals.success = req.flash('success'),
-  res.locals.csrfToken = req.csrfToken()
+  res.locals.csrfToken = req.csrfToken(),
+  res.locals.moment = require('moment')
   next()
 })
 
@@ -123,4 +124,6 @@ db.once('open', function() {
 });
 
 //app Listen
-app.listen(PORT)
+app.listen(PORT,()=>{
+  console.log('server 3000 started')
+})

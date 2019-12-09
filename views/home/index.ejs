@@ -27,7 +27,7 @@
 <section id="productCards">
     <div class="container text-center pt-3">
         <div class="row">
-            <% prods.forEach((product)=>{%>
+            <% prods.slice().reverse().forEach((product)=>{%>
             <div class="col-lg-4 col-md-6">
                 <div class="card-deck">
                     <div class="card shadow mb-5 bg-white rounded">

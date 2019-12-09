@@ -1,5 +1,6 @@
 //models
 const User = require('../models/user')
+const Product = require('../models/product')
 //passport
 const passport = require('passport')
 //crypto - nodejs module to generate token
@@ -27,9 +28,14 @@ exports.getRegister = (req,res,next)=>{
 
 //Register ::POST
 exports.postRegister = (req,res,next)=>{
-    const email = req.body.email
-    const password = req.body.password
-    User.register(new User({email:email}),password,(err,user)=>{
+    const newUser = new User({
+         email     : req.body.email,
+         firstName : req.body.firstName,
+         lastName  : req.body.lastName,
+         mobileNum : req.body.phoneNum
+    })
+    
+    User.register(newUser,req.body.password,(err,user)=>{
         if(err){
             console.log(err)
             req.flash('error','لم تتم عمليه تسجيل')
@@ -100,7 +106,7 @@ exports.postResetPassword = (req,res,next)=>{
                 html:`<h3>لقد طلبت تغير كلمه المرور</h3>
                 <p><a href='https://masknmasr.herokuapp.com/reset/${token}'>يمكنك تغيرها من خلال هذا <a>اللينك</p>
                 `
-            })
+            })//
         })
         .catch(err => {
 
@@ -171,4 +177,27 @@ exports.postNewPassword = (req,res,next)=>{
     .catch(err=>{
         console.log(err)
     })
+}
+
+//user profile
+exports.userProfile = (req,res,next)=>{
+    const userId = req.params.userId
+    User.findById(userId)
+    .then(user => {
+        Product.find().where('author.id').equals(user._id).exec((err,products)=>{
+            if(err){
+                console.log(err)
+                res.redirect('/')
+            }
+            res.render('user/userProfile',{
+                pageTitle: 'بيانات الحساب',
+                user ,
+                products
+            })
+        })
+    })
+    .catch(err=>{
+        console.log(err)
+    })
+    
 }

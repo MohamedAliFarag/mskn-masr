@@ -42,7 +42,8 @@ router.get('/reset/:token',authRoutes.getNewPassword)
 //new password ::POST
 router.post('/new-password',authRoutes.postNewPassword)
 
-
+//user profile
+router.get('/profile/:userId',authRoutes.userProfile)
 
 
 module.exports = router

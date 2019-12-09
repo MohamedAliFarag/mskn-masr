@@ -48,8 +48,11 @@
             <div class="card shadow mb-5 rounded bg-white">
                 <div class="card-body text-center">
                     <h4>بيانات المالك</h4>
-                    <h4><%=product.author.username%></h4>
-                    <input type="checkbox" checked data-toggle="toggle" data-on="<i class='fas fa-mobile-alt fa-x'></i> رقم التليفون" data-off="01111843250" data-onstyle="danger" data-offstyle="success" data-size="large">
+                    <a href="/profile/<%=product.author.id%>"><h4><%=product.author.firstName +' '+product.author.lastName%></h4></a>
+                    <input type="checkbox" checked data-toggle="toggle" data-on="<i class='fas fa-mobile-alt fa-x'></i> رقم التليفون" data-off="0<%=product.phoneNum%>" data-onstyle="danger" data-offstyle="success" data-size="large">
+                    <hr>
+                    <h4>تاريخ اضافه الاعلان</h4>
+                    <h4><%=moment(product.createdAt).locale('ar').fromNow()%></h4>
                 </div>
             </div>
         </div>
