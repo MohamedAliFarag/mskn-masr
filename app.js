@@ -70,6 +70,9 @@ const fileFilter = (req,file,cb)=>{
 //multer
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter}).single('image'))
 
+//admin Routes
+const adminRoutes = require('./routes/admin')
+app.use('/admin',adminRoutes)
 //csruf Token
 const csrfProtection = csrf()
 
