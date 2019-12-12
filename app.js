@@ -70,12 +70,9 @@ const fileFilter = (req,file,cb)=>{
 //multer
 app.use(multer({ storage: fileStorage, fileFilter: fileFilter}).single('image'))
 
-//admin Dashboard Routes
-const adminRoutes   = require('./routes/admin')
-app.use('/admin',adminRoutes)
-
 //csruf Token
 const csrfProtection = csrf()
+
 //ejs
 app.set('view engine','ejs')
 //static file app
@@ -102,12 +99,10 @@ app.use((req,res,next)=>{
 const homeRoutes    = require('./routes/home')
 const productRoutes = require('./routes/products')
 const authRoutes    = require('./routes/auth')
-
 //use Routes
 app.use(homeRoutes)
 app.use(productRoutes)
 app.use(authRoutes)
-
 
 //404 page
 app.use((req,res,next)=>{
