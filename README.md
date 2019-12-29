@@ -12,5 +12,6 @@ https://masknmasr.herokuapp.com/
 * products
 * search engine (not finished)
 * Email service
+* ADMIN Panel (using Admin Bro)
 
 
