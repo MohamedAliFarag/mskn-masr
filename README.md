@@ -11,11 +11,7 @@ https://masknmasr.herokuapp.com/
 * users
 * products
 * search By name
-* Email service
-<<<<<<< HEAD
+* Email service (SendGrid)
 * Admin Panel (admin bro) /admin
-=======
-* ADMIN Panel (using Admin Bro)
->>>>>>> cd4ff521fbc1f25f91dc6cf43eeb28dcaf3f7171
 
 
