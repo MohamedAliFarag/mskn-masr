@@ -5,12 +5,12 @@
     <div class="green-overlay">
             <div class="container text-center p-5">
                     <h3 class="display-4 ">ابحث عن منزلك</h3>
-                <form class="pt-5">
+                <form action="/" method="GET" class="pt-5">
                     <div class="form-group">
                         <div class="input-group">
-                                <input type="text" class="form-control form-control-lg" placeholder="مثلا : شقه بالاولى عمارات">
+                                <input type="text" name="search" class="form-control form-control-lg" placeholder="مثلا : شقه بالاولى عمارات" autocomplete="off">
                                 <div class="input-group-prepend">
-                                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                        <!-- <input type="hidden" name="_csrf" value="<%=csrfToken%>"> -->
                                       <button class="btn btn-success" type="submit">ابحث</button>
                                 </div>
                                 
@@ -27,6 +27,15 @@
 <section id="productCards">
     <div class="container text-center pt-3">
         <div class="row">
+            <% if(noMatch !== undefined){%>
+                <div class="container text-center">
+                    <div class="col-md-12 mt-5">
+                        <i class="far fa-frown fa-5x"></i>
+                        <h3 class="text-danger pt-3"><%=noMatch%></h3>
+                    </div>
+                </div>
+            
+            <%}%>
             <% prods.slice().reverse().forEach((product)=>{%>
             <div class="col-lg-4 col-md-6">
                 <div class="card-deck">

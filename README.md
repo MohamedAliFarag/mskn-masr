@@ -10,7 +10,8 @@ https://masknmasr.herokuapp.com/
 ### Features
 * users
 * products
-* search engine (not finished)
+* search By name
 * Email service
+* Admin Panel (admin bro) /admin
 
 
