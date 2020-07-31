@@ -15,7 +15,7 @@
     "csurf": "^1.10.0",
     "debug": "^2.6.9",
     "define-property": "^2.0.2",
-    "dot-prop": "^4.2.0",
+    "dot-prop": "^5.1.1",
     "dotenv": "^8.2.0",
     "ejs": "^2.7.1",
     "express": "^4.17.1",
